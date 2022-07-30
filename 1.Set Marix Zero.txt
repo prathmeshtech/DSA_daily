@@ -1,0 +1,85 @@
+Set Matrix Zero
+Problem Statement: Given a matrix if an element in the matrix is 0 then you will have to set its entire column and row to 0 and then return the matrix.
+Examples 1:
+   Input: matrix=[[1,1,1],[1,0,1],[1,1,1]]
+   Output: [[1,0,1],[0,0,0],[1,0,1]]
+
+Brute Force:
+ void setZeroes(vector < vector < int >> & matrix) {
+  int rows = matrix.size(), cols = matrix[0].size();
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols; j++) {
+      if (matrix[i][j] == 0) {
+
+        int ind = i - 1;
+        while (ind >= 0) {
+          if (matrix[ind][j] != 0) {
+            matrix[ind][j] = -1;
+          }
+          ind--;
+        }
+        ind = i + 1;
+        while (ind < rows) {
+          if (matrix[ind][j] != 0) {
+            matrix[ind][j] = -1;
+          }
+          ind++;
+        }
+        ind = j - 1;
+        while (ind >= 0) {
+          if (matrix[i][ind] != 0) {
+            matrix[i][ind] = -1;
+
+          }
+          ind--;
+        }
+        ind = j + 1;
+        while (ind < cols) {
+          if (matrix[i][ind] != 0) {
+            matrix[i][ind] = -1;
+
+          }
+          ind++;
+        }
+      }
+    }
+  }
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols; j++) {
+      if (matrix[i][j] <= 0) {
+        matrix[i][j] = 0;
+      }
+    }
+  }
+
+}
+
+Better approach:
+    Take two dummy array one of size of row and other of size of column.Now traverse through the array.If matrix[i][j]==0 then set dummy1[i]=0(for row) and dummy2[j]=0(for column).Now traverse through the array again and if dummy1[i]==0  || dummy2[j]==0 then arr[i][j]=0,else continue.
+ void setZeroes(vector < vector < int >> & matrix) {
+  int rows = matrix.size(), cols = matrix[0].size();
+  vector < int > dummy1(rows,-1), dummy2(cols,-1);
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols; j++) {
+      if (matrix[i][j] == 0) {
+        dummy1[i] = 0;
+        dummy2[j] = 0;
+      }
+    }
+
+  }
+  for (int i = 0; i < rows; i++) {
+    for (int j = 0; j < cols; j++) {
+      if (dummy1[i] == 0 || dummy2[j]==0) {
+        matrix[i][j] = 0;
+      }
+    }
+  }
+
+}
+
+Optimizing Better Approach: 
+  Instead of taking two separate dummy array,take first row and column of the matrix as the array for checking whether the particular column or row has
+ the value 0 or not.Since matrix[0][0] are overlapping.Therefore take separate variable col0(say) to check if the 0th column has 0 or not and use 
+matrix[0][0] to check if the 0th row has 0 or not.Now traverse from last element to the first element and check if matrix[i][0]==0 || matrix[0][j]==0 and if 
+true set matrix[i][j]=0,else continue.
