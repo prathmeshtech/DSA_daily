@@ -1,0 +1,59 @@
+Sort an array of 0s, 1s and 2s
+
+Problem Statement: Given an array consisting of only 0s, 1s and 2s. Write a program to in-place sort the array without using inbuilt sort functions.
+ ( Expected: Single pass-O(N) and constant space)
+
+Input: nums = [2,0,2,1,1,0]
+Output: [0,0,1,1,2,2]
+
+Input: nums = [2,0,1]
+Output: [0,1,2]
+
+Solution 1: Sorting Using sort function.
+            Time Complexity: O(N*logN)
+
+Solution 2: Keeping count of values
+
+1.Take 3 variables to maintain the count of 0, 1 and 2.
+2.Travel the array once and increment the corresponding counting variables
+( let’s consider count_0 = a, count_1 = b, count_2 = c )
+
+3.In 2nd traversal of array, we will now over write the first ‘a’ indices / positions in array with ’0’, the next ‘b’ with ‘1’ and the remaining ‘c’ with ‘2’.
+
+Time Complexity: O(N) + O(N)
+
+
+Solution 3: 3-Pointer approach
+
+This problem is a variation of the popular Dutch National flag algorithm 
+
+Intuition: In this approach, we will be using 3 pointers named low, mid, and high. We will be
+ using these 3 pointers to move around the values. The primary goal here is to move 0s to the
+ left and 2s to the right of the array and at the same time all the 1s shall be in the middle
+ region of the array and hence the array will be sorted. 
+
+void sortColors(vector<int>& nums) {
+        int lo = 0; 
+        int hi = nums.size() - 1; 
+        int mid = 0; 
+
+        while (mid <= hi) { 
+            switch (nums[mid]) { 
+
+            // If the element is 0 
+            case 0: 
+                swap(nums[lo++], nums[mid++]); 
+                break; 
+
+            // If the element is 1 . 
+            case 1: 
+                mid++; 
+                break; 
+
+            // If the element is 2 
+            case 2: 
+                swap(nums[mid], nums[hi--]); 
+                break; 
+            }
+        }
+   }
