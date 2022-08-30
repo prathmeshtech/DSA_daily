@@ -1,0 +1,40 @@
+Find middle element in a Linked List
+Problem Statement: Given the head of a singly linked list, return the middle node of the linked list. If there are two middle nodes, return the second middle node.
+
+Examples:
+
+Input Format: 
+( Pointer / Access to the head of a Linked list )
+head = [1,2,3,4,5]
+
+Output: 3
+
+Solution 1: Naive Approach
+
+Intuition: We can traverse through the Linked List while maintaining a count of nodes let’s say in variable n, and then traversing for 2nd time for n/2 nodes to get to the middle of the list.
+
+ListNode* middleNode(ListNode* head) {
+    	int n = 0;
+    	ListNode* temp = head;
+    	while(temp) {
+        	n++;
+        		temp = temp->next;
+    	}
+   	 
+    	temp = head;
+   	 
+    	for(int i = 0; i < n / 2; i++) {
+        		temp = temp->next;
+    	}
+   	 
+    	return temp;
+	}
+
+Solution 2: [Efficient] Tortoise-Hare-Approach
+
+ListNode* middleNode(ListNode* head) {
+        ListNode *slow = head, *fast = head;
+        while (fast && fast->next)
+            slow = slow->next, fast = fast->next->next;
+        return slow;
+    }
